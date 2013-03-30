@@ -1,10 +1,11 @@
-Shoes.setup do
-  gem 'archive-zip'
-	gem 'rubyzip'
-end
+#Shoes.setup do
+#  gem 'archive-zip'
+#	gem 'rubyzip'
+#end
 
 
-Shoes.app(title: "RubyLauncher", width: 600, height: 400) do
+#Shoes.app(title: "RubyLauncher", width: 600, height: 400) do
+
 #per batch file, APPDATA is now APPDATA\.rubylauncher\
 @workingDir = ENV['APPDATA'] + '.minecraft'
 @username = "nickpetty@kf5jak.com"
@@ -142,26 +143,26 @@ end
 
 def installMinecraft
 	
-	#makeworkingDir
+	makeworkingDir
 	
-	#makesubDir("\\bin")
-	#downloadFile("assets.minecraft.net", "/1_4_7/", "minecraft.jar", "#{@workingDir}\\bin")
-	#downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "jinput.jar", "#{@workingDir}\\bin")
-	#downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "lwjgl.jar", "#{@workingDir}\\bin")
-	#downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "lwjgl_util.jar", "#{@workingDir}\\bin")
+	makesubDir("\\bin")
+	downloadFile("assets.minecraft.net", "/1_4_7/", "minecraft.jar", "#{@workingDir}\\bin")
+	downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "jinput.jar", "#{@workingDir}\\bin")
+	downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "lwjgl.jar", "#{@workingDir}\\bin")
+	downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "lwjgl_util.jar", "#{@workingDir}\\bin")
 
-	#makesubDir("\\bin\\natives")
-	#downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "windows_natives.jar", "#{@workingDir}\\bin\\natives")
-	#File.rename("#{@workingDir}\\bin\\natives\\windows_natives.jar", "#{@workingDir}\\bin\\natives\\windows_natives.zip")
-	#zipLocal = @workingDir + "\\bin\\natives\\windows_natives.zip"
-	#zipPath = @workingDir + "\\bin\\natives\\"
-	#Archive::Zip.extract(zipLocal, zipPath)
-	#File.delete("#{@workingDir}\\bin\\natives\\windows_natives.zip")
-	#downloadResourcesXML
-	#downloadFile("kf5jak.com", "/", "discoverpackruby.zip", "#{@workingDir}\\modpack.zip")
-	Archive::Zip.extract("#{@workingDir}\\modpack.zip", "#{@workingDir}")
-	#Archive::Zip.extract("#{@workingDir}\\bin\\modpack.zip", "#{@workingDir}")
-	installModpack
+	makesubDir("\\bin\\natives")
+	downloadFile("s3.amazonaws.com", "/MinecraftDownload/", "windows_natives.jar", "#{@workingDir}\\bin\\natives")
+	File.rename("#{@workingDir}\\bin\\natives\\windows_natives.jar", "#{@workingDir}\\bin\\natives\\windows_natives.zip")
+	zipLocal = @workingDir + "\\bin\\natives\\windows_natives.zip"
+	zipPath = @workingDir + "\\bin\\natives\\"
+	Archive::Zip.extract(zipLocal, zipPath)
+	File.delete("#{@workingDir}\\bin\\natives\\windows_natives.zip")
+	downloadResourcesXML
+	downloadFile("kf5jak.com", "/", "discoverpackruby.zip", "#{@workingDir}\\modpack.zip")
+	#Modpack Install has many bugs
+	#Archive::Zip.extract("#{@workingDir}\\modpack.zip", "#{@workingDir}")
+	#installModpack
 
 end
 
@@ -186,7 +187,7 @@ end
 
 def startMinecraft
 	checkInstall
-	#getSessionID("nickpetty@kf5jak.com", "sS129909847")
+	getSessionID("<password>", "<password>")
 	var = 'start /wait java -Xms256m -Xmx256m -cp "' + @workingDir + '\bin\minecraft.jar;' + @workingDir + '\bin\jinput.jar;' + @workingDir + '\bin\lwjgl.jar;' + @workingDir + '\bin\lwjgl_util.jar" -Djava.library.path="' + @workingDir + '\bin\natives" net.minecraft.client.Minecraft ' + @user + ' ' + @sessionid
 	system(var)
 	
@@ -204,36 +205,23 @@ def installModpack
 		#zfile.file.delete("net/minecraft/client/Minecraft.class")
 		#zfile.file.delete("net/minecraft/client/MinecraftApplet.class")
 	#end
-Archive::Zip.archive("#{@workingDir}\\bin\\minecraft.jar", "#{@workingDir}\\bin\\modpack.zip/.")
+#Archive::Zip.archive("#{@workingDir}\\bin\\minecraft.jar", "#{@workingDir}\\bin\\modpack.zip/.")
 
 end
-
-def checkStoredEmail
-	
-end
-
-def storeEmail
-	configFile = @workingDir + "\\" + "config"
-	File.open(yourfile, 'w') { |file| file.write(@username) }
-end
-
-
 
 #Begin Shoes GUI
 
+#stack do 
 
+#username_field = edit_line
+#password_field = edit_line
+#	button("Launch") do 
+#		@username = username_field.text
+#		@password = password_field.text
 
-stack do 
-
-username_field = edit_line
-password_field = edit_line
-	button("Launch") do 
-		@username = username_field.text
-		@password = password_field.text
-
-		getSessionID(@username, @password)
-		startMinecraft
-	end
+#		getSessionID(@username, @password)
+#		startMinecraft
+#	end
 	
-end
-end
+#end
+#end
